@@ -23,9 +23,4 @@
 		<name>menus_dropdown</name>
 	</requires>
 
-	<suggests>
-		<type>plugin</type>
-		<name>menus_dropdown</name>
-	</suggests>
-
 </plugin_manifest>
