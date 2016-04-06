@@ -31,10 +31,10 @@ function menus_entity_init() {
 function menus_entity_setup($hook, $type, $return, $params) {
 
 	$setting_primary = elgg_get_plugin_setting('primary_actions', 'menus_entity', '');
-	$primary_actions = string_to_tag_array($setting_primary);
+	$primary_actions = (array) string_to_tag_array($setting_primary);
 
 	$setting_remove = elgg_get_plugin_setting('remove_actions', 'menus_entity', '');
-	$remove_actions = string_to_tag_array($setting_remove);
+	$remove_actions = (array) string_to_tag_array($setting_remove);
 	
 	$ellipsis = false;
 	
