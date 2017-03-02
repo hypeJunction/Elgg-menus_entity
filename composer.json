@@ -1,6 +1,6 @@
 {
 	"name": "hypejunction/menus_entity",
-	"version": "1.0.1",
+	"version": "2.0.0",
 	"type": "elgg-plugin",
 	"description": "Dropdown entity menu for Elgg",
 	"homepage": "http://hypejunction.com",
