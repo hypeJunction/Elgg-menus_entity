@@ -37,17 +37,20 @@ function menus_entity_setup($hook, $type, $return, $params) {
 	$remove_actions = (array) string_to_tag_array($setting_remove);
 	
 	$ellipsis = false;
-	
-	foreach ($return as &$item) {
+
+	// Convert to array for by-reference iteration (MenuItems is an iterator in Elgg 3.x)
+	$items = $return instanceof \Traversable ? iterator_to_array($return) : (array) $return;
+
+	foreach ($items as $key => $item) {
 		if (!$item instanceof ElggMenuItem) {
 			continue;
 		}
 
 		if (in_array($item->getName(), $remove_actions)) {
-			$item = null;
+			unset($items[$key]);
 			continue;
 		}
-		
+
 		if (in_array($item->getName(), $primary_actions) || !$item->getHref()) {
 			continue;
 		}
@@ -55,7 +58,7 @@ function menus_entity_setup($hook, $type, $return, $params) {
 
 		$ellipsis = true;
 		$item->setParentName('ellipsis');
-		
+
 		// combine all menus into one section
 		// subsection data is used by menus_api, if enabled
 		$item->setData('subsection', $item->getSection());
@@ -93,5 +96,5 @@ function menus_entity_setup($hook, $type, $return, $params) {
 		));
 	}
 
-	return array_filter($return);
+	return array_values(array_filter($items));
 }
