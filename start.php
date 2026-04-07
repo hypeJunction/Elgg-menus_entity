@@ -96,5 +96,11 @@ function menus_entity_setup($hook, $type, $return, $params) {
 		));
 	}
 
-	return array_values(array_filter($items));
+	$items = array_values(array_filter($items));
+
+	if ($return instanceof \Elgg\Menu\MenuItems) {
+		return new \Elgg\Menu\MenuItems($items);
+	}
+
+	return $items;
 }
