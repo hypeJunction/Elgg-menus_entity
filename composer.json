@@ -1,6 +1,6 @@
 {
 	"name": "hypejunction/menus_entity",
-	"version": "3.0.0",
+	"version": "4.0.0",
 	"type": "elgg-plugin",
 	"description": "Dropdown entity menu for Elgg",
 	"homepage": "http://hypejunction.com",
@@ -14,10 +14,18 @@
 			"email": "info@hypejunction.com"
 		}
 	],
+	"extra": {
+		"installer-name": "menus_entity"
+	},
 	"require": {
-		"php": ">=7.1",
-		"composer/installers": "1.*",
-		"hypejunction/menus_dropdown": "~2.0"
+		"php": ">=7.4",
+		"composer/installers": "~1.0 || ~2.0",
+		"hypejunction/menus_dropdown": "~3.0 || ~4.0"
+	},
+	"autoload": {
+		"psr-0": {
+			"": "classes/"
+		}
 	},
 	"config": {
 		"allow-plugins": {

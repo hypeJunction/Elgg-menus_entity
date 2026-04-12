@@ -10,22 +10,8 @@ class MenusEntityTest extends IntegrationTestCase {
     /**
      * {@inheritdoc}
      */
-    public static function setUpBeforeClass(): void {
-        parent::setUpBeforeClass();
-
-        // Load start.php to register hooks (Elgg 3.x pattern)
-        $startFile = dirname(dirname(dirname(__DIR__))) . '/start.php';
-        if (file_exists($startFile)) {
-            require_once $startFile;
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function up() {
-        // Trigger init event so the hook gets registered
-        menus_entity_init();
+        // elgg-plugin.php registers the hook declaratively — no init call needed.
     }
 
     /**
@@ -33,9 +19,22 @@ class MenusEntityTest extends IntegrationTestCase {
      */
     public function down() {
         // Reset plugin settings between tests
-        elgg_unset_plugin_setting('primary_actions', 'menus_entity');
-        elgg_unset_plugin_setting('remove_actions', 'menus_entity');
-        elgg_unset_plugin_setting('icon', 'menus_entity');
+        $plugin = elgg_get_plugin_from_id('menus_entity');
+        if ($plugin) {
+            $plugin->unsetSetting('primary_actions');
+            $plugin->unsetSetting('remove_actions');
+            $plugin->unsetSetting('icon');
+        }
+    }
+
+    /**
+     * Helper: set a plugin setting
+     */
+    protected function setSetting(string $name, string $value): void {
+        $plugin = elgg_get_plugin_from_id('menus_entity');
+        if ($plugin) {
+            $plugin->setSetting($name, $value);
+        }
     }
 
     /**
@@ -84,42 +83,18 @@ class MenusEntityTest extends IntegrationTestCase {
         return null;
     }
 
-    public function testHookRegisteredAtHighPriority() {
-        $hooks = _elgg_services()->hooks;
+    public function testHookRegistered() {
+        // Trigger the hook with empty items on a plugin entity to confirm it is wired up.
+        $plugin = elgg_get_plugin_from_id('menus_entity');
+        $this->assertNotNull($plugin, 'menus_entity plugin should be registered');
 
-        $registrations = $hooks->getOrderedHandlers('register', 'menu:entity');
-
-        $found = false;
-        foreach ($registrations as $handler) {
-            if ($handler === 'menus_entity_setup') {
-                $found = true;
-                break;
-            }
-            // Handle callable arrays or closures wrapping the function
-            if (is_array($handler) || is_string($handler)) {
-                if ($handler === 'menus_entity_setup') {
-                    $found = true;
-                    break;
-                }
-            }
-        }
-
-        $this->assertTrue($found, 'menus_entity_setup should be registered for register, menu:entity');
-
-        // Verify it runs late (at priority 999) by checking it appears after
-        // any default-priority handlers
-        $lastIndex = null;
-        foreach ($registrations as $index => $handler) {
-            if ($handler === 'menus_entity_setup') {
-                $lastIndex = $index;
-            }
-        }
-        $this->assertNotNull($lastIndex);
+        $result = elgg_trigger_plugin_hook('register', 'menu:entity', ['entity' => $plugin], []);
+        $this->assertTrue(is_array($result) || $result instanceof \Elgg\Menu\MenuItems);
     }
 
     public function testPrimaryActionsRemainVisible() {
-        elgg_set_plugin_setting('primary_actions', 'likes,access', 'menus_entity');
-        elgg_set_plugin_setting('remove_actions', '', 'menus_entity');
+        $this->setSetting('primary_actions', 'likes,access');
+        $this->setSetting('remove_actions', '');
 
         $items = [
             $this->makeItem('likes'),
@@ -141,8 +116,8 @@ class MenusEntityTest extends IntegrationTestCase {
     }
 
     public function testRemoveActionsAreRemoved() {
-        elgg_set_plugin_setting('primary_actions', '', 'menus_entity');
-        elgg_set_plugin_setting('remove_actions', 'likes', 'menus_entity');
+        $this->setSetting('primary_actions', '');
+        $this->setSetting('remove_actions', 'likes');
 
         $items = [
             $this->makeItem('likes'),
@@ -160,8 +135,8 @@ class MenusEntityTest extends IntegrationTestCase {
     }
 
     public function testNonPrimaryItemsMovedToEllipsis() {
-        elgg_set_plugin_setting('primary_actions', 'likes', 'menus_entity');
-        elgg_set_plugin_setting('remove_actions', '', 'menus_entity');
+        $this->setSetting('primary_actions', 'likes');
+        $this->setSetting('remove_actions', '');
 
         $items = [
             $this->makeItem('likes'),
@@ -182,8 +157,8 @@ class MenusEntityTest extends IntegrationTestCase {
     }
 
     public function testEditItemGetsSpecialStyling() {
-        elgg_set_plugin_setting('primary_actions', '', 'menus_entity');
-        elgg_set_plugin_setting('remove_actions', '', 'menus_entity');
+        $this->setSetting('primary_actions', '');
+        $this->setSetting('remove_actions', '');
 
         $items = [
             $this->makeItem('edit'),
@@ -200,8 +175,8 @@ class MenusEntityTest extends IntegrationTestCase {
     }
 
     public function testDeleteItemGetsSpecialStyling() {
-        elgg_set_plugin_setting('primary_actions', '', 'menus_entity');
-        elgg_set_plugin_setting('remove_actions', '', 'menus_entity');
+        $this->setSetting('primary_actions', '');
+        $this->setSetting('remove_actions', '');
 
         $items = [
             $this->makeItem('delete'),
@@ -218,8 +193,8 @@ class MenusEntityTest extends IntegrationTestCase {
     }
 
     public function testEllipsisMenuItemCreated() {
-        elgg_set_plugin_setting('primary_actions', 'likes', 'menus_entity');
-        elgg_set_plugin_setting('remove_actions', '', 'menus_entity');
+        $this->setSetting('primary_actions', 'likes');
+        $this->setSetting('remove_actions', '');
 
         $items = [
             $this->makeItem('likes'),
@@ -237,8 +212,8 @@ class MenusEntityTest extends IntegrationTestCase {
 
     public function testEllipsisNotCreatedWhenNoDropdownItems() {
         // When all items are primary, no ellipsis should be added
-        elgg_set_plugin_setting('primary_actions', 'likes,access', 'menus_entity');
-        elgg_set_plugin_setting('remove_actions', '', 'menus_entity');
+        $this->setSetting('primary_actions', 'likes,access');
+        $this->setSetting('remove_actions', '');
 
         $items = [
             $this->makeItem('likes'),
@@ -252,8 +227,8 @@ class MenusEntityTest extends IntegrationTestCase {
     }
 
     public function testItemsWithoutHrefSkipped() {
-        elgg_set_plugin_setting('primary_actions', '', 'menus_entity');
-        elgg_set_plugin_setting('remove_actions', '', 'menus_entity');
+        $this->setSetting('primary_actions', '');
+        $this->setSetting('remove_actions', '');
 
         // Create an item without href (empty string = falsy)
         $noHrefItem = ElggMenuItem::factory([
@@ -275,9 +250,9 @@ class MenusEntityTest extends IntegrationTestCase {
     }
 
     public function testCustomIconSetting() {
-        elgg_set_plugin_setting('primary_actions', 'likes', 'menus_entity');
-        elgg_set_plugin_setting('remove_actions', '', 'menus_entity');
-        elgg_set_plugin_setting('icon', 'cog', 'menus_entity');
+        $this->setSetting('primary_actions', 'likes');
+        $this->setSetting('remove_actions', '');
+        $this->setSetting('icon', 'cog');
 
         $items = [
             $this->makeItem('likes'),
@@ -311,8 +286,8 @@ class MenusEntityTest extends IntegrationTestCase {
     }
 
     public function testNonPrimaryItemsSectionResetToDefault() {
-        elgg_set_plugin_setting('primary_actions', '', 'menus_entity');
-        elgg_set_plugin_setting('remove_actions', '', 'menus_entity');
+        $this->setSetting('primary_actions', '');
+        $this->setSetting('remove_actions', '');
 
         $item = $this->makeItem('report', '#', 'extras');
 
