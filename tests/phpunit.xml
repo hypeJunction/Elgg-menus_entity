@@ -6,9 +6,19 @@
     colors="true"
     verbose="true"
 >
+    <php>
+        <env name="ELGG_DB_PREFIX" value="elgg_"/>
+        <env name="ELGG_DB_HOST" value="db"/>
+        <env name="ELGG_DB_NAME" value="elgg"/>
+        <env name="ELGG_DB_USER" value="elgg"/>
+        <env name="ELGG_DB_PASS" value="elgg"/>
+    </php>
     <testsuites>
-        <testsuite name="menus_entity">
-            <directory>phpunit</directory>
+        <testsuite name="unit">
+            <directory>phpunit/unit</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory>phpunit/integration</directory>
         </testsuite>
     </testsuites>
 </phpunit>
