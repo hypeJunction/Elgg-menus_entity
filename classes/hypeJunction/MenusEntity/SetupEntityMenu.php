@@ -71,7 +71,7 @@ class SetupEntityMenu {
 			if (!$icon) {
 				$icon = 'ellipsis-v';
 			}
-			$items[] = ElggMenuItem::factory([
+$items[] = ElggMenuItem::factory([
 				'name' => 'ellipsis',
 				'href' => '#',
 				'text' => \elgg_view_icon($icon),

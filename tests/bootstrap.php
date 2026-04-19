@@ -13,7 +13,9 @@ require_once $elggRoot . '/vendor/autoload.php';
 $testClassesDir = $elggRoot . '/vendor/elgg/elgg/engine/tests/classes';
 spl_autoload_register(function ($class) use ($testClassesDir) {
     $file = $testClassesDir . '/' . str_replace('\\', '/', $class) . '.php';
-    if (file_exists($file)) require_once $file;
+    if (file_exists($file)) {
+        require_once $file;
+    }
 });
 
 // Load plugin autoloader if present
@@ -25,7 +27,9 @@ if (file_exists($pluginRoot . '/vendor/autoload.php')) {
 // PSR-0 autoloader for plugin classes/ directory
 spl_autoload_register(function ($class) use ($pluginRoot) {
     $file = $pluginRoot . '/classes/' . str_replace('\\', '/', $class) . '.php';
-    if (file_exists($file)) require_once $file;
+    if (file_exists($file)) {
+        require_once $file;
+    }
 });
 
 \Elgg\Application::loadCore();
