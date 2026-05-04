@@ -13,13 +13,15 @@ const DB_CONFIG = {
 export async function loginAs(
   page: Page,
   username: string,
-  password: string = 'testpass123',
+  password: string = 'admin12345',
 ) {
   await page.goto('/login');
-  await page.fill('input[name="username"]', username);
-  await page.fill('input[name="password"]', password);
-  await page.click('button[type="submit"]');
-  await page.waitForLoadState('networkidle');
+  // Elgg 4.x renders two login forms (hidden header dropdown + visible sidebar).
+  // Target the visible sidebar form to avoid filling the hidden one.
+  await page.fill('.elgg-module-aside input[name="username"]', username);
+  await page.fill('.elgg-module-aside input[name="password"]', password);
+  await page.click('.elgg-module-aside button[type="submit"], .elgg-module-aside input[type="submit"]');
+  await page.waitForURL((url) => !url.pathname.includes('/login'));
 }
 
 export async function queryDb(sql: string, params: any[] = []) {

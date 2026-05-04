@@ -1,6 +1,5 @@
 {
 	"name": "hypejunction/menus_entity",
-	"version": "4.0.0",
 	"type": "elgg-plugin",
 	"description": "Dropdown entity menu for Elgg",
 	"homepage": "http://hypejunction.com",
@@ -12,7 +11,7 @@
 		"dropdown",
 		"entity"
 	],
-	"license": "GPL-2.0",
+	"license": "GPL-2.0-only",
 	"authors": [
 		{
 			"name": "Ismayil Khayredinov",
@@ -32,8 +31,8 @@
 		"elgg/elgg": "^4.0"
 	},
 	"autoload": {
-		"psr-0": {
-			"": "classes/"
+		"psr-4": {
+			"hypeJunction\\MenusEntity\\": "classes/hypeJunction/MenusEntity/"
 		}
 	},
 	"config": {
