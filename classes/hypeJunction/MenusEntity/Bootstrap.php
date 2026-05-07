@@ -4,6 +4,9 @@ namespace hypeJunction\MenusEntity;
 
 use Elgg\PluginBootstrap;
 
+/**
+ * Bootstrap class.
+ */
 class Bootstrap extends PluginBootstrap {
 
 	/**
