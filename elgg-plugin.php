@@ -3,7 +3,7 @@
 return [
 	'plugin' => [
 		'name' => 'Dropdown Entity Menus',
-		'version' => '4.0.0',
+		'version' => '5.0.0',
 	],
 
 	'bootstrap' => \hypeJunction\MenusEntity\Bootstrap::class,
@@ -14,7 +14,7 @@ return [
 		'icon' => 'ellipsis-v',
 	],
 
-	'hooks' => [
+	'events' => [
 		'register' => [
 			'menu:entity' => [
 				\hypeJunction\MenusEntity\SetupEntityMenu::class => [

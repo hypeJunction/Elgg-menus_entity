@@ -2,7 +2,7 @@
 
 namespace hypeJunction\MenusEntity;
 
-use Elgg\Hook;
+use Elgg\Event;
 use ElggMenuItem;
 
 /**
@@ -13,11 +13,11 @@ class SetupEntityMenu {
 	/**
 	 * Reorganize entity menu into primary items and an ellipsis dropdown.
 	 *
-	 * @param Hook $hook "register","menu:entity"
+	 * @param Event $hook "register","menu:entity"
 	 *
 	 * @return \Elgg\Menu\MenuItems|ElggMenuItem[]|null
 	 */
-	public function __invoke(Hook $hook) {
+	public function __invoke(Event $hook) {
 
 		$return = $hook->getValue();
 
