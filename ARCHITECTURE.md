@@ -1,30 +1,30 @@
-# menus_entity — Architecture (Elgg 4.x)
+# menus_entity — Architecture (Elgg 5.x)
 
 ## Purpose
 
-Dropdown entity menus plugin. Reorganises the `menu:entity` hook result so
+Dropdown entity menus plugin. Reorganises the `menu:entity` event result so
 that configurable "primary" actions remain directly visible, and all other
 actions collapse into an ellipsis (…) dropdown.
 
 ## Entry Point
 
-`elgg-plugin.php` — declares the plugin, default settings, and one hook
-handler via the `hooks` key.
+`elgg-plugin.php` — declares the plugin, default settings, and one event
+handler via the `events` key.
 
 ## Class Inventory
 
 | Class | Role |
 |-------|------|
 | `hypeJunction\MenusEntity\Bootstrap` | Lifecycle stub (load/boot/init/ready/shutdown/activate/deactivate/upgrade). No logic — plugin is entirely declarative. |
-| `hypeJunction\MenusEntity\SetupEntityMenu` | Invokable hook handler for `register, menu:entity` (priority 999). |
+| `hypeJunction\MenusEntity\SetupEntityMenu` | Invokable event handler for `register, menu:entity` (priority 999). |
 
-## Hook / Event Registration
+## Event Registration
 
-| Type | Name | Type param | Handler | Priority |
-|------|------|------------|---------|----------|
-| hook | register | menu:entity | `SetupEntityMenu` | 999 |
+| Event | Type param | Handler | Priority |
+|-------|------------|---------|----------|
+| register | menu:entity | `SetupEntityMenu` | 999 |
 
-## Hook Handler Logic (`SetupEntityMenu`)
+## Handler Logic (`SetupEntityMenu`)
 
 1. Reads `primary_actions` and `remove_actions` plugin settings.
 2. Iterates the current `menu:entity` return value.
@@ -53,29 +53,26 @@ handler via the `hooks` key.
 
 ## Dependencies
 
-- `hypejunction/menus_dropdown` (~3.0 || ~4.0) — provides the dropdown
-  rendering that consumes the `ellipsis` parent item.
+- `hypejunction/menus_dropdown` (~5.0) — provides the dropdown rendering
+  that consumes the `ellipsis` parent item.
 
-## Migration Notes (3.x → 4.x)
+## Migration Notes (4.x → 5.x)
 
-- Converted from `start.php` + `activate.php` + `autoloader.php` to
-  `elgg-plugin.php` Bootstrap pattern.
-- Hook handler class (`SetupEntityMenu`) was extracted from the procedural
-  callback.
+- `elgg-plugin.php` `'hooks'` key renamed to `'events'`.
+- `SetupEntityMenu`: `use Elgg\Hook` → `use Elgg\Event`; `__invoke(Hook $hook)` → `__invoke(Event $hook)`.
+- Docker stack updated to `php:8.2-apache`, `mysql:8.0`, `elgg/elgg 5.1.12`.
+- Integration tests: `elgg_trigger_plugin_hook()` → `elgg_trigger_event_results()`;
+  value argument changed from `[]` to `new \Elgg\Menu\MenuItems([])` (Elgg 5.x
+  core handlers call `->get()` on the value and expect a `MenuItems` collection).
 - No data model changes; no `Elgg\Upgrade\Batch` required.
-- `Elgg\Hook` interface is still the correct type hint for `register,
-  menu:entity` handlers in Elgg 4.x (returnvalue hook, not a pure event).
-  Do not change to `Elgg\Event` until migrating to Elgg 5.x.
 
 ## Test Coverage
 
-- **Unit** (`tests/phpunit/unit/`): structural tests — class shape, type
-  hints, invokability.
-- **Integration** (`tests/phpunit/integration/`): full Elgg bootstrap;
-  triggers `register, menu:entity` via `elgg_trigger_plugin_hook` and
-  asserts menu item placement, ellipsis creation, icon/subsection metadata.
-- **Playwright** (`tests/playwright/`): browser-level smoke test of the
-  entity menu on the live Elgg site.
+- **Unit** (`tests/phpunit/unit/`): structural tests — class shape, type hints, invokability.
+- **Integration** (`tests/phpunit/integration/`): full Elgg bootstrap; triggers
+  `register, menu:entity` via `elgg_trigger_event_results` and asserts menu item
+  placement, ellipsis creation, icon/subsection metadata. 15 tests, 115 assertions.
+- **Playwright** (`tests/playwright/`): browser-level smoke test of the entity menu.
 
 Run integration tests inside the Docker stack:
 

@@ -1,3 +1,23 @@
+<a name="5.0.0"></a>
+# 5.0.0 (2026-05-08)
+
+### Breaking Changes
+
+* **elgg:** raise minimum to Elgg 5.x (PHP 8.2+). Plugins on Elgg 4.x must stay on menus_entity 4.x.
+
+### Migration (4.x → 5.x)
+
+* **events:** `elgg-plugin.php` `hooks` key renamed to `events`.
+* **handler:** `SetupEntityMenu` type hint updated from `Elgg\Hook` to `Elgg\Event`.
+* **tests:** integration tests updated to use `elgg_trigger_event_results()` and pass `MenuItems` as value argument.
+* **docker:** stack updated to `php:8.2-apache`, `mysql:8.0`, `elgg/elgg 5.1.12`.
+
+### Dependency Updates
+
+* `elgg/elgg ^5.0`, PHP `>=8.2`, `hypejunction/menus_dropdown ~5.0`, version bumped to `5.0.0`
+
+---
+
 <a name="4.0.0"></a>
 # 4.0.0 (2026-04-12)
 
