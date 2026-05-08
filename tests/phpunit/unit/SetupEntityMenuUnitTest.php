@@ -25,14 +25,14 @@ class SetupEntityMenuUnitTest extends UnitTestCase {
 		$this->assertTrue(is_callable($handler), 'SetupEntityMenu must be invokable');
 	}
 
-	public function testInvokeAcceptsElggHook() {
+	public function testInvokeAcceptsElggEvent() {
 		$reflection = new \ReflectionMethod(SetupEntityMenu::class, '__invoke');
 		$params = $reflection->getParameters();
 		$this->assertCount(1, $params, '__invoke must take exactly one argument');
 
 		$type = $params[0]->getType();
 		$this->assertNotNull($type, '__invoke argument must be type-hinted');
-		$this->assertSame('Elgg\\Hook', ltrim((string) $type, '?'));
+		$this->assertSame('Elgg\\Event', ltrim((string) $type, '?'));
 	}
 
 	public function testBootstrapClassExists() {

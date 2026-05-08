@@ -62,7 +62,7 @@ class MenusEntityTest extends IntegrationTestCase {
             'entity' => $entity,
         ];
 
-        $result = elgg_trigger_plugin_hook('register', 'menu:entity',$params, $items);
+        $result = elgg_trigger_event_results('register', 'menu:entity', $params, $items);
 
         if ($result instanceof \Elgg\Menu\MenuItems) {
             return iterator_to_array($result);
@@ -88,7 +88,7 @@ class MenusEntityTest extends IntegrationTestCase {
         $plugin = elgg_get_plugin_from_id('menus_entity');
         $this->assertNotNull($plugin, 'menus_entity plugin should be registered');
 
-        $result = elgg_trigger_plugin_hook('register', 'menu:entity',['entity' => $plugin], []);
+        $result = elgg_trigger_event_results('register', 'menu:entity', ['entity' => $plugin], []);
         $this->assertTrue(is_array($result) || $result instanceof \Elgg\Menu\MenuItems);
     }
 
