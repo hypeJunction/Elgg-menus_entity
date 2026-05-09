@@ -1,23 +1,44 @@
 {
 	"name": "hypejunction/menus_entity",
-	"version": "2.0.0",
 	"type": "elgg-plugin",
 	"description": "Dropdown entity menu for Elgg",
-	"homepage": "http://hypejunction.com",
+	"homepage": "https://github.com/hypeJunction/Elgg-menus_entity",
 	"keywords": [
-		"elgg", "plugin", "ui", "menus", "dropdown", "entity"
+		"elgg",
+		"plugin",
+		"ui",
+		"menus",
+		"dropdown",
+		"entity"
 	],
-	"license": "GPL-2.0",
+	"license": "GPL-2.0-only",
 	"authors": [
 		{
 			"name": "Ismayil Khayredinov",
-			"email": "info@hypejunction.com"
+			"email": "ismayil.khayredinov@gmail.com"
 		}
 	],
+	"extra": {
+		"installer-name": "menus_entity",
+		"elgg-plugin": {
+			"id": "menus_entity"
+		}
+	},
 	"require": {
-		"php": ">=5.5",
-		"composer/installers": "1.*",
-		"hypejunction/menus_dropdown": "~2.0"
+		"php": ">=8.3",
+		"ext-intl": "*",
+		"composer/installers": "^2.0",
+		"hypejunction/menus_dropdown": "~7.0",
+		"elgg/elgg": "~7.0.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"hypeJunction\\MenusEntity\\": "classes/hypeJunction/MenusEntity/"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		}
 	}
 }
-
