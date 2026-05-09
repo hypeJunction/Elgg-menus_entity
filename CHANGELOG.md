@@ -1,3 +1,17 @@
+<a name="6.0.0"></a>
+# 6.0.0 (2026-05-09)
+
+### Breaking Changes
+
+* **elgg:** raise minimum to Elgg 6.x (PHP 8.1+). Plugins on Elgg 5.x must stay on menus_entity 5.x.
+
+### Migration (5.x → 6.x)
+
+* **composer:** `elgg/elgg ~6.1.0`, PHP `>=8.1`, added `ext-intl`; `hypejunction/menus_dropdown` bumped to `~6.0`.
+* **bootstrap:** `Bootstrap` simplified to extend `DefaultPluginBootstrap` (no-op method stubs removed).
+* **docker:** test stack added for Elgg 6.x (docker/elgg6/).
+* No data migration required.
+
 <a name="5.0.0"></a>
 # 5.0.0 (2026-05-08)
 

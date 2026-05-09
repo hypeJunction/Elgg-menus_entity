@@ -1,4 +1,4 @@
-# menus_entity — Architecture (Elgg 5.x)
+# menus_entity — Architecture (Elgg 6.x)
 
 ## Purpose
 
@@ -53,8 +53,17 @@ handler via the `events` key.
 
 ## Dependencies
 
-- `hypejunction/menus_dropdown` (~5.0) — provides the dropdown rendering
+- `hypejunction/menus_dropdown` (~6.0) — provides the dropdown rendering
   that consumes the `ellipsis` parent item.
+
+## Migration Notes (5.x → 6.x)
+
+- `elgg/elgg ~6.1.0`, `php >=8.1`, `ext-intl` added in `composer.json`.
+- `hypejunction/menus_dropdown` dependency bumped from `~5.0` to `~6.0`.
+- `Bootstrap` simplified to extend `DefaultPluginBootstrap` (all no-op method stubs removed).
+- No JS files — no AMD→ESM conversion needed.
+- Docker test stack added for Elgg 6.x (docker/elgg6/).
+- No data migration needed.
 
 ## Migration Notes (4.x → 5.x)
 
