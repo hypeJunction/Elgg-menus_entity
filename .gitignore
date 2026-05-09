@@ -11,6 +11,3 @@ robots.txt
 /vendor/
 composer.lock
 Gemfile.lock
-tests/.phpunit.result.cache
-tests/playwright/node_modules/
-docker/.env
