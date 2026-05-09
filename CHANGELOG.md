@@ -1,3 +1,16 @@
+<a name="7.0.0"></a>
+# 7.0.0 (2026-05-09)
+
+### Breaking Changes
+
+* **elgg:** raise minimum to Elgg 7.x (PHP 8.3+). Plugins on Elgg 6.x must stay on menus_entity 6.x.
+
+### Migration (6.x → 7.x)
+
+* **composer:** `elgg/elgg ~7.0.0`, PHP `>=8.3`; `hypejunction/menus_dropdown` bumped to `~7.0`.
+* **docker:** test stack added for Elgg 7.x (docker/elgg7/).
+* No PHP or CSS breaking changes. No data migration required.
+
 <a name="6.0.0"></a>
 # 6.0.0 (2026-05-09)
 

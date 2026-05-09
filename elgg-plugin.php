@@ -3,7 +3,7 @@
 return [
 	'plugin' => [
 		'name' => 'Dropdown Entity Menus',
-		'version' => '6.0.0',
+		'version' => '7.0.0',
 	],
 
 	'bootstrap' => \hypeJunction\MenusEntity\Bootstrap::class,
