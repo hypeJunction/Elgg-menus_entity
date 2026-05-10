@@ -10,7 +10,6 @@ Dropdown Entity Menu for Elgg
 
 ![Entity Menu](https://raw.github.com/hypeJunction/Elgg-menus_entity/master/screenshots/entity-menu.png "Entity Menu")
 
-
 ## Compatibility
 
 | Plugin version | Elgg version |
