@@ -1,23 +1,27 @@
 {
-	"name": "hypejunction/menus_entity",
-	"version": "2.0.0",
-	"type": "elgg-plugin",
-	"description": "Dropdown entity menu for Elgg",
-	"homepage": "http://hypejunction.com",
-	"keywords": [
-		"elgg", "plugin", "ui", "menus", "dropdown", "entity"
-	],
-	"license": "GPL-2.0",
-	"authors": [
-		{
-			"name": "Ismayil Khayredinov",
-			"email": "info@hypejunction.com"
-		}
-	],
-	"require": {
-		"php": ">=5.5",
-		"composer/installers": "1.*",
-		"hypejunction/menus_dropdown": "~2.0"
-	}
+    "name": "hypejunction/menus_entity",
+    "version": "7.0.0",
+    "type": "elgg-plugin",
+    "description": "Dropdown entity menu for Elgg",
+    "homepage": "http://hypejunction.com",
+    "keywords": [
+        "elgg",
+        "plugin",
+        "ui",
+        "menus",
+        "dropdown",
+        "entity"
+    ],
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Ismayil Khayredinov",
+            "email": "info@hypejunction.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "composer/installers": "1.*",
+        "hypejunction/menus_dropdown": "~2.0"
+    }
 }
-
