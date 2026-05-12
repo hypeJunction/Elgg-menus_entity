@@ -9,12 +9,13 @@ Dropdown Entity Menu for Elgg
 * Allows items to be defined as primary actions via settings
 
 ![Entity Menu](https://raw.github.com/hypeJunction/Elgg-menus_entity/master/screenshots/entity-menu.png "Entity Menu")
+
 ## Compatibility
 
 | Plugin version | Elgg version |
 |---|---|
-| 7.0.0 | 7.x |
-| 6.0.0 | 6.x |
-| 5.0.0 | 5.x |
-| 4.0.0 | 4.x |
-| 3.0.0 | 3.x |
+| 7.0.0   | 7.x  |
+| 6.0.0   | 6.x  |
+| 5.0.0   | 5.x  |
+| 4.0.0   | 4.x  |
+| 3.0.0   | 3.x  |
