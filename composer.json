@@ -27,7 +27,7 @@
 	"require": {
 		"php": ">=7.4",
 		"composer/installers": "^2.0",
-		"hypejunction/menus_dropdown": "dev-migrate/elgg-4.x as 2.1.0",
+		"hypejunction/menus_dropdown": "^4.0",
 		"elgg/elgg": "^4.0"
 	},
 	"autoload": {
