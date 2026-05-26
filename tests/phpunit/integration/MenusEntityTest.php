@@ -19,7 +19,7 @@ class MenusEntityTest extends IntegrationTestCase {
      */
     public function down() {
         // Reset plugin settings between tests
-        $plugin = elgg_get_plugin_from_id('menus_entity');
+        $plugin = \elgg_get_plugin_from_id('menus_entity');
         if ($plugin) {
             $plugin->unsetSetting('primary_actions');
             $plugin->unsetSetting('remove_actions');
@@ -31,7 +31,7 @@ class MenusEntityTest extends IntegrationTestCase {
      * Helper: set a plugin setting
      */
     protected function setSetting(string $name, string $value): void {
-        $plugin = elgg_get_plugin_from_id('menus_entity');
+        $plugin = \elgg_get_plugin_from_id('menus_entity');
         if ($plugin) {
             $plugin->setSetting($name, $value);
         }
@@ -62,7 +62,7 @@ class MenusEntityTest extends IntegrationTestCase {
             'entity' => $entity,
         ];
 
-        $result = elgg_trigger_plugin_hook('register', 'menu:entity',$params, $items);
+        $result = \elgg_trigger_plugin_hook('register', 'menu:entity',$params, $items);
 
         if ($result instanceof \Elgg\Menu\MenuItems) {
             return iterator_to_array($result);
@@ -85,10 +85,10 @@ class MenusEntityTest extends IntegrationTestCase {
 
     public function testHookRegistered() {
         // Trigger the hook with empty items on a plugin entity to confirm it is wired up.
-        $plugin = elgg_get_plugin_from_id('menus_entity');
+        $plugin = \elgg_get_plugin_from_id('menus_entity');
         $this->assertNotNull($plugin, 'menus_entity plugin should be registered');
 
-        $result = elgg_trigger_plugin_hook('register', 'menu:entity',['entity' => $plugin], []);
+        $result = \elgg_trigger_plugin_hook('register', 'menu:entity',['entity' => $plugin], []);
         $this->assertTrue(is_array($result) || $result instanceof \Elgg\Menu\MenuItems);
     }
 
@@ -270,12 +270,12 @@ class MenusEntityTest extends IntegrationTestCase {
     }
 
     public function testSettingsViewRenders() {
-        $plugin = elgg_get_plugin_from_id('menus_entity');
+        $plugin = \elgg_get_plugin_from_id('menus_entity');
         if (!$plugin) {
             $this->markTestSkipped('menus_entity plugin not found');
         }
 
-        $output = elgg_view('plugins/menus_entity/settings', [
+        $output = \elgg_view('plugins/menus_entity/settings', [
             'entity' => $plugin,
         ]);
 
